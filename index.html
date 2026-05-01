@@ -1,41 +1,42 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Akoi Live TV</title>
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
     <style>
         body { margin: 0; background: black; overflow: hidden; }
-        .container { position: relative; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; }
-        video { width: 100%; height: 100%; object-fit: contain; cursor: pointer; }
-        .live-badge { position: absolute; top: 20px; left: 20px; background: red; color: white; padding: 5px 12px; font-weight: bold; border-radius: 4px; z-index: 10; }
-        .news-ticker { position: absolute; bottom: 0; width: 100%; background: blue; color: white; padding: 8px 0; font-size: 18px; z-index: 10; }
+        .vjs-default-skin { width: 100vw; height: 100vh; }
+        .live-badge { position: absolute; top: 20px; left: 20px; background: red; color: white; padding: 5px 12px; font-weight: bold; border-radius: 4px; z-index: 10; animation: blink 1s infinite; }
+        @keyframes blink { 0% {opacity: 1;} 50% {opacity: 0.5;} 100% {opacity: 1;} }
+        .news-ticker { position: absolute; bottom: 0; width: 100%; background: blue; color: white; padding: 10px 0; font-size: 20px; z-index: 10; }
     </style>
 </head>
 <body>
 
-<div class="container">
     <div class="live-badge">● LIVE</div>
-    
-    <video id="tvVideo" autoplay loop muted playsinline>
+
+    <video id="my-video" class="video-js vjs-default-skin vjs-big-play-centered" 
+           controls preload="auto" autoplay muted loop playsinline>
         <source src="https://raw.githubusercontent.com/satpal-tech/live-tv/main/akoi.mp4" type="video/mp4">
-        ਤੁਹਾਡਾ ਬ੍ਰਾਊਜ਼ਰ ਵੀਡੀਓ ਸਪੋਰਟ ਨਹੀਂ ਕਰਦਾ।
     </video>
 
     <div class="news-ticker">
-        <marquee>ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ ਜੀ, ਤੁਸੀਂ ਦੇਖ ਰਹੇ ਹੋ Akoi Live TV... ਪੇਂਡੂ ਨਿਊਜ਼ ਮਲੇਰਕੋਟਲਾ...</marquee>
+        <marquee scrollamount="8">ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ ਜੀ, ਤੁਸੀਂ ਦੇਖ ਰਹੇ ਹੋ Akoi Live TV... ਪੇਂਡੂ ਨਿਊਜ਼ ਮਲੇਰਕੋਟਲਾ... ਸਾਡੇ ਚੈਨਲ ਨੂੰ ਦੇਖਣ ਲਈ ਧੰਨਵਾਦ।</marquee>
     </div>
-</div>
 
-<script>
-    var vid = document.getElementById("tvVideo");
-    // ਸਕ੍ਰੀਨ 'ਤੇ ਕਿਤੇ ਵੀ ਕਲਿੱਕ ਕਰਨ ਨਾਲ ਆਵਾਜ਼ ਚਾਲੂ ਹੋ ਜਾਵੇਗੀ
-    document.body.onclick = function() {
-        vid.muted = false;
-        vid.play();
-    };
-</script>
-
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <script>
+        var player = videojs('my-video');
+        player.ready(function() {
+            this.play();
+        });
+        // ਸਕ੍ਰੀਨ 'ਤੇ ਕਲਿੱਕ ਕਰਨ ਨਾਲ ਆਵਾਜ਼ ਚੱਲੇਗੀ
+        document.body.onclick = function() {
+            player.muted(false);
+            player.play();
+        };
+    </script>
 </body>
 </html>
